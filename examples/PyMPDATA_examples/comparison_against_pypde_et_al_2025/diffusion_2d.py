@@ -11,27 +11,19 @@ from PyMPDATA.boundary_conditions import Periodic
 
 @dataclass
 class InitialConditions:
-    def __init__(
-        self,
-        diffusion_coefficient: float,
-        time_step: float,
-        time_end: float,
-        grid_shape: tuple[int, int],
-        grid_range_x: tuple[float, float],
-        grid_range_y: tuple[float, float],
-        pulse_position: tuple[float, float],
-    ) -> None:
-        self.diffusion_coefficient = diffusion_coefficient
-        self.time_step = time_step
-        self.time_end = time_end
-        self.grid_shape = grid_shape
-        self.grid_range_x = grid_range_x
-        self.grid_range_y = grid_range_y
-        self.pulse_position = pulse_position
-        self.nx, self.ny = grid_shape
-        self.min_x, self.max_x = grid_range_x
-        self.min_y, self.max_y = grid_range_y
-        self.pulse_x, self.pulse_y = pulse_position
+    diffusion_coefficient: float
+    time_step: float
+    time_end: float
+    grid_shape: tuple[int, int]
+    grid_range_x: tuple[float, float]
+    grid_range_y: tuple[float, float]
+    pulse_position: tuple[float, float]
+
+    def __post_init__(self):
+        self.nx, self.ny = self.grid_shape
+        self.min_x, self.max_x = self.grid_range_x
+        self.min_y, self.max_y = self.grid_range_y
+        self.pulse_x, self.pulse_y = self.pulse_position
 
     def __repr__(self) -> str:
         return (
